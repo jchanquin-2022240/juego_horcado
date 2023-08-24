@@ -9,13 +9,19 @@ const resultText = document.getElementById("result-text");
 
 //Valores de opciones para botones
 let options = {
-  Palabras: [
+  Iniciar: [
     "Array",
     "Carro",
     "Rana",
     "Victor",
     "Pelota",
     "Juego",
+    "Paleta",
+    "Chamalito",
+    "Lic",
+    "Papaya",
+    "Gusano",
+    "",
   ]
 };
 
@@ -27,7 +33,7 @@ let chosenWord = "";
 
 //Mostrar botones de opción
 const displayOptions = () => {
-  optionsContainer.innerHTML += `<h3>Seleccione una opción</h3>`;
+  optionsContainer.innerHTML += `<h3>Juego Horcado</h3>`;
   let buttonCon = document.createElement("div");
   for (let value in options) {
     buttonCon.innerHTML += `<button class="options" onclick="generateWord('${value}')">${value}</button>`;
@@ -111,20 +117,21 @@ const initializer = () => {
             winCount += 1;
             //if winCount equals word lenfth
             if (winCount == charArray.length) {
-              resultText.innerHTML = `<h2 class='win-msg'>You Win!!</h2><p>The word was <span>${chosenWord}</span></p>`;
+              resultText.innerHTML = `<h2 class='win-msg'>Ganaste</h2><p>La palabra era <span>${chosenWord}</span></p>`;
               //block all buttons
               blocker();
             }
           }
         });
       } else {
-        //lose count
+        
+        //pierde contador
         count += 1;
-        //for drawing man
+        //para dibujar el monito
         drawMan(count);
-        //Count==6 because head,body,left arm, right arm,left leg,right leg
-        if (count == 6) {
-          resultText.innerHTML = `<h2 class='lose-msg'>You Lose!!</h2><p>The word was <span>${chosenWord}</span></p>`;
+        //Count==7 por cuerda,head,body,left arm, right arm,left leg,right leg
+        if (count == 7) {
+          resultText.innerHTML = `<h2 class='lose-msg'>Perdiste!</h2><p>La palabra era <span>${chosenWord}</span></p>`;
           blocker();
         }
       }
@@ -154,6 +161,10 @@ const canvasCreator = () => {
     context.lineTo(toX, toY);
     context.stroke();
   };
+
+  const cuerda = () => {
+    drawLine(0, 10, 70, 0);
+  }
 
   const head = () => {
     context.beginPath();
@@ -185,39 +196,38 @@ const canvasCreator = () => {
   const initialDrawing = () => {
     //clear canvas
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    //bottom line
-    drawLine(10, 130, 130, 130);
     //left line
-    drawLine(10, 10, 10, 131);
+    drawLine(10, 10, 10, 150);
     //top line
-    drawLine(10, 10, 70, 10);
-    //small top line
-    drawLine(70, 10, 70, 20);
+    drawLine(10, 10,250, 10);
   };
 
-  return { initialDrawing, head, body, leftArm, rightArm, leftLeg, rightLeg };
+  return { initialDrawing, cuerda,head, body, leftArm, rightArm, leftLeg, rightLeg };
 };
 
 //draw the man
 const drawMan = (count) => {
-  let { head, body, leftArm, rightArm, leftLeg, rightLeg } = canvasCreator();
+  let { cuerda, head, body, leftArm, rightArm, leftLeg, rightLeg } = canvasCreator();
   switch (count) {
     case 1:
-      head();
+      cuerda();
       break;
     case 2:
-      body();
+      head();
       break;
     case 3:
-      leftArm();
+      body();
       break;
     case 4:
-      rightArm();
+      leftArm();
       break;
     case 5:
-      leftLeg();
+      rightArm();
       break;
     case 6:
+      leftLeg();
+      break;
+    case 7:
       rightLeg();
       break;
     default:

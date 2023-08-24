@@ -5,10 +5,11 @@
   font-family: "Poppins", sans-serif;
 }
 body {
-  background-color: blue;
+  background-color:   #1465bb;
 }
 .container {
-  font-size: 16px;
+  /*font-size: 16px;*/
+  font-size: 20px;
   background-color: #ffffff;
   width: 90vw;
   max-width: 34em;
@@ -30,7 +31,7 @@ body {
   margin: 1.2em 0 2.4em 0;
 }
 #options-container button {
-  padding: 0.5em 15em;
+  padding: 0.5em 20em;
   border: 3px solid #000000;
   background-color: #ffffff;
   color: #000000;
@@ -94,8 +95,8 @@ button:hover {
 }
 canvas {
   display: block;
-  margin: auto;
-  border: 1px solid #000000;
+  margin: 10px;
+  /*border: 1px solid #000000;*/
 }
 .hide {
   display: none;
