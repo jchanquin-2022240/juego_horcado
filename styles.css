@@ -31,16 +31,12 @@ body {
   margin: 1.2em 0 2.4em 0;
 }
 #options-container button {
-  padding: 0.5em 20em;
+  padding: 0.5em 5em;
   border: 3px solid #000000;
   background-color: #ffffff;
   color: #000000;
   border-radius: 0.3em;
   text-transform: capitalize;
-}
-
-button:hover {
-  background-color: red;
 }
 
 #options-container button:disabled {

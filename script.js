@@ -21,7 +21,6 @@ let options = {
     "Lic",
     "Papaya",
     "Gusano",
-    "",
   ]
 };
 
@@ -43,6 +42,7 @@ const displayOptions = () => {
 
 //Bloquea todos los botones
 const blocker = () => {
+  
   let optionsButtons = document.querySelectorAll(".options");
   let letterButtons = document.querySelectorAll(".letters");
   //desactivar todas las opciones
@@ -64,8 +64,9 @@ const generateWord = (optionValue) => {
   optionsButtons.forEach((button) => {
     if (button.innerText.toLowerCase() === optionValue) {
       button.classList.add("active");
+      
     }
-    button.disabled = true;
+    button.disabled = false;
   });
 
   //inicialmente ocultar letras, borrar palabra anterior
@@ -130,7 +131,7 @@ const initializer = () => {
         //para dibujar el monito
         drawMan(count);
         //Count==7 por cuerda,head,body,left arm, right arm,left leg,right leg
-        if (count == 7) {
+        if (count == 8) {
           resultText.innerHTML = `<h2 class='lose-msg'>Perdiste!</h2><p>La palabra era <span>${chosenWord}</span></p>`;
           blocker();
         }
@@ -163,33 +164,33 @@ const canvasCreator = () => {
   };
 
   const cuerda = () => {
-    drawLine(0, 10, 70, 0);
+    drawLine(250, 30, 250, 10);
   }
 
   const head = () => {
     context.beginPath();
-    context.arc(70, 30, 10, 0, Math.PI * 2, true);
+    context.arc(250, 40, 10, 15, Math.PI * 2, true);
     context.stroke();
   };
 
   const body = () => {
-    drawLine(70, 40, 70, 80);
+    drawLine(250, 50, 250, 80);
   };
 
   const leftArm = () => {
-    drawLine(70, 50, 50, 70);
+    drawLine(250, 65, 230, 50);
   };
 
   const rightArm = () => {
-    drawLine(70, 50, 90, 70);
+    drawLine(250, 65, 270, 50);
   };
 
   const leftLeg = () => {
-    drawLine(70, 80, 50, 110);
+    drawLine(250, 80, 230, 100);
   };
 
   const rightLeg = () => {
-    drawLine(70, 80, 90, 110);
+    drawLine(250, 80, 270, 100);
   };
 
   //initial frame
