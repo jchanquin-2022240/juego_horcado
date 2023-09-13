@@ -10,17 +10,31 @@ const resultText = document.getElementById("result-text");
 //Valores de opciones para botones
 let options = {
   Iniciar: [
-    "Array",
-    "Carro",
-    "Rana",
-    "Victor",
-    "Pelota",
-    "Juego",
-    "Paleta",
+    "Arbol",
+    "Computadora",
+    "Television",
+    "Casa",
+    "Felicidades",
     "Chamalito",
-    "Lic",
-    "Papaya",
-    "Gusano",
+    "Guitarra",
+    "Playa",
+    "Escuela",
+    "Electricidad",
+    "Lapiz",
+    "Moto",
+    "Teclado",
+    "Sandia",
+    "Enfermo",
+    "cuaderno",
+    "pantalon",
+    "monitor",
+    "silla",
+    "cuadro",
+    "tarea",
+    "pista",
+    "Pedro",
+    "corazon",
+    "carrera"
   ]
 };
 
@@ -40,9 +54,8 @@ const displayOptions = () => {
   optionsContainer.appendChild(buttonCon);
 };
 
-//Bloquea todos los botones
 const blocker = () => {
-  
+
   let optionsButtons = document.querySelectorAll(".options");
   let letterButtons = document.querySelectorAll(".letters");
   //desactivar todas las opciones
@@ -64,9 +77,9 @@ const generateWord = (optionValue) => {
   optionsButtons.forEach((button) => {
     if (button.innerText.toLowerCase() === optionValue) {
       button.classList.add("active");
-      
+
     }
-    button.disabled = false;
+    button.disabled = true;
   });
 
   //inicialmente ocultar letras, borrar palabra anterior
@@ -85,12 +98,13 @@ const generateWord = (optionValue) => {
   userInputSection.innerHTML = displayItem;
 };
 
-//Función inicial (llamada cuando se carga la página/el usuario presiona nuevo juego)
 const initializer = () => {
   winCount = 0;
-  count = 0;
+  count = 7;
 
-  //Initially erase all content and hide letteres and new game button
+  const contadorErroresElement = document.getElementById("contador-errores");
+  contadorErroresElement.textContent = "Oportunidades: 7";
+
   userInputSection.innerHTML = "";
   optionsContainer.innerHTML = "";
   letterContainer.classList.add("hide");
@@ -103,35 +117,31 @@ const initializer = () => {
     button.classList.add("letters");
     //Number to ASCII[A-Z]
     button.innerText = String.fromCharCode(i);
-    //character button click
     button.addEventListener("click", () => {
       let charArray = chosenWord.split("");
       let dashes = document.getElementsByClassName("dashes");
       //if array contains clciked value replace the matched dash with letter else dram on canvas
       if (charArray.includes(button.innerText)) {
         charArray.forEach((char, index) => {
-          //if character in array is same as clicked button
           if (char === button.innerText) {
-            //replace dash with letter
             dashes[index].innerText = char;
-            //increment counter
             winCount += 1;
-            //if winCount equals word lenfth
             if (winCount == charArray.length) {
               resultText.innerHTML = `<h2 class='win-msg'>Ganaste</h2><p>La palabra era <span>${chosenWord}</span></p>`;
-              //block all buttons
               blocker();
             }
           }
         });
       } else {
-        
+
         //pierde contador
-        count += 1;
+        count -= 1;
         //para dibujar el monito
         drawMan(count);
-        //Count==7 por cuerda,head,body,left arm, right arm,left leg,right leg
-        if (count == 8) {
+        const contadorErroresElement = document.getElementById("contador-errores");
+        contadorErroresElement.textContent = `Oportunidades: ${count}`;
+        //Count ==7 por cuerda,head,body,left arm, right arm,left leg,right leg
+        if (count == 0) {
           resultText.innerHTML = `<h2 class='lose-msg'>Perdiste!</h2><p>La palabra era <span>${chosenWord}</span></p>`;
           blocker();
         }
@@ -156,7 +166,6 @@ const canvasCreator = () => {
   context.strokeStyle = "#000";
   context.lineWidth = 2;
 
-  //For drawing lines
   const drawLine = (fromX, fromY, toX, toY) => {
     context.moveTo(fromX, fromY);
     context.lineTo(toX, toY);
@@ -193,42 +202,39 @@ const canvasCreator = () => {
     drawLine(250, 80, 270, 100);
   };
 
-  //initial frame
   const initialDrawing = () => {
-    //clear canvas
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    //left line
     drawLine(10, 10, 10, 150);
-    //top line
-    drawLine(10, 10,250, 10);
+    drawLine(10, 10, 250, 10);
   };
 
-  return { initialDrawing, cuerda,head, body, leftArm, rightArm, leftLeg, rightLeg };
-};
+  return { initialDrawing, cuerda, head, body, leftArm, rightArm, leftLeg, rightLeg };
+}
+
 
 //draw the man
 const drawMan = (count) => {
   let { cuerda, head, body, leftArm, rightArm, leftLeg, rightLeg } = canvasCreator();
   switch (count) {
-    case 1:
+    case 6:
       cuerda();
       break;
-    case 2:
+    case 5:
       head();
       break;
-    case 3:
+    case 4:
       body();
       break;
-    case 4:
+    case 3:
       leftArm();
       break;
-    case 5:
+    case 2:
       rightArm();
       break;
-    case 6:
+    case 1:
       leftLeg();
       break;
-    case 7:
+    case 0:
       rightLeg();
       break;
     default:
@@ -236,6 +242,7 @@ const drawMan = (count) => {
   }
 };
 
-//New Game
+
+//reiniciar juego
 newGameButton.addEventListener("click", initializer);
 window.onload = initializer;
